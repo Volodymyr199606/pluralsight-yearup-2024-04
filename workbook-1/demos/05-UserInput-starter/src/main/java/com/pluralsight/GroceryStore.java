@@ -38,6 +38,7 @@ public class GroceryStore
         quantity = userInput.nextInt();
 
         // calculations
+
         totalPrice = PRODUCT_CHOCOLATE_PRICE * quantity;
 
         System.out.printf("The total is %.2f \n", totalPrice);
