@@ -31,7 +31,7 @@ public class Main
         System.out.println("What is your pay rate hourly? ");
         payRate = userInput.nextFloat();
         grossPay = payRate * hoursWorked;
-        System.out.printf("Your gross %s for %.2f hours is %.2f ",username, hoursWorked, grossPay);
+        System.out.printf("Your gross %s for %.2f hours is $%.2f ",username, hoursWorked, grossPay);
 
 
         
