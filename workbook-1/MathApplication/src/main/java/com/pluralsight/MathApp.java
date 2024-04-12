@@ -147,11 +147,20 @@ public class MathApp
 
         // code the logic to the problem here
 
-        double randomNum = Math.random();
+        int lowEdge = 100;
+        int highEdge = 200;
+        int highEdgeTemp = highEdge - lowEdge ;
+
+        double SeedValue = Math.random();
+        int random = (int)((SeedValue  * highEdgeTemp)+lowEdge);
 
         // use System.out.println() to display results
         // ex: System.out.println("The answer is " + answer);
-        System.out.println("Random number between 0 and 1  is " + randomNum);
+        System.out.println("Random number between 0 and 1  is " + random);
         System.out.println("-----------------------");
+
+
+
+
     }
 }
