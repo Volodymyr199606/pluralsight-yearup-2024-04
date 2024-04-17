@@ -11,11 +11,12 @@ public class EventApplication
     public static void main(String[] args)
     {
 
+
     }
 
-    public static Person register()
+    public static void register()
     {
-        return null;
+
     }
 
     public static void greetGuest(Person guest)
