@@ -34,7 +34,9 @@ public class CelPhone
     public String getPhoneNumber(){return phoneNumber;}
     public void setPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
 
-    public String getOwner(){return owner;}public  void setOwner(String owner){this.owner = owner;}
+    public String getOwner(){return owner;}
+    public  void setOwner(String owner)
+    {this.owner = owner;}
 
 
 

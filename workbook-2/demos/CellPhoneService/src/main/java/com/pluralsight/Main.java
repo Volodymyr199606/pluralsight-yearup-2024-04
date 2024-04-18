@@ -43,6 +43,8 @@ public class Main
         myPhone.setCarrier(carrier);
         myPhone.setPhoneNumber(phoneNumber);
         myPhone.setOwner(owner);
+        myPhone.getCarrier();
+
 
         // display
 
@@ -52,7 +54,6 @@ public class Main
         System.out.println("Carrier: " + carrier);
         System.out.println("PhoneNumber: "+ phoneNumber);
         System.out.println("Owner: " + owner);
-
 
     }
 
