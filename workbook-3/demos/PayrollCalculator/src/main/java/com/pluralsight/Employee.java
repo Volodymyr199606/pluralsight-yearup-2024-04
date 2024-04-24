@@ -1,33 +1,52 @@
 package com.pluralsight;
 
-public class Employee
-{
+public class Employee {
 
-    private String sku;
+    private int employeeId;
     private String name;
-    private double price;
-    private String department;
+    private double hoursWorked;
+    private double payRate;
 
-    public Product(String sku, String name, double price, String department)
-    {
-        this.sku = sku;
+    public Employee(int employeeId, String name, double hoursWorked, double payRate) {
+        this.employeeId = employeeId;
         this.name = name;
-        this.price = price;
-        this.department = department;
+        this.hoursWorked = hoursWorked;
+        this.payRate = payRate;
     }
 
-    public String getSku()
-    {
-        return sku;
-    }
-    public void setSku(String sku)
-    {
-        this.sku = sku;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public String getName()
-    {
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+
+    public void setHoursWorked(double hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    public double getPayRate() {
+        return payRate;
+    }
+
+    public void setPayRate(double payRate) {
+        this.payRate = payRate;
+    }
+
+    public double getGrossPay() {
+        return hoursWorked * payRate;
+    }
 }
