@@ -1,27 +1,41 @@
 package com.pluralsight;
 
 public class Room {
-    private final int numberOfBeds;
-    private final double price;
-    private final boolean occupied;
-    private final boolean dirty;
+    private boolean occupied;
+    private boolean dirty;
+    private int numberOfBeds;
+    private double price;
 
     public Room(int numberOfBeds, double price) {
-        this.numberOfBeds = numberOfBeds;
-        this.price = price;
         this.occupied = false;
         this.dirty = false;
-    }
-
-    public int getNumberOfBeds() {
-        return numberOfBeds;
-    }
-
-    public double getPrice() {
-        return price;
+        this.numberOfBeds = numberOfBeds;
+        this.price = price;
     }
 
     public boolean isAvailable() {
         return !occupied && !dirty;
+    }
+
+    public void checkIn() {
+        if (!isAvailable()) {
+            throw new IllegalStateException("Room is not available for check-in");
+        }
+        this.occupied = true;
+        this.dirty = true;
+    }
+
+    public void checkOut() {
+        if (!this.occupied) {
+            throw new IllegalStateException("No guest to check out");
+        }
+        this.occupied = false;
+    }
+
+    public void cleanRoom() {
+        if (this.occupied) {
+            throw new IllegalStateException("Cannot clean room while it is occupied");
+        }
+        this.dirty = false;
     }
 }

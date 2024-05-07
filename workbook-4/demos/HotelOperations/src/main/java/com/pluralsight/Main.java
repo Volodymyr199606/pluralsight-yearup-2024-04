@@ -9,7 +9,7 @@ public class Main {
         Reservation reservation = new Reservation("double", 3, true);
         System.out.println("Reservation total: " + reservation.getReservationTotal());
 
-        
+
         System.out.println("Room type: " + reservation.getRoomType());
         reservation.setRoomType("king");
         System.out.println("Updated room type: " + reservation.getRoomType());
@@ -25,5 +25,19 @@ public class Main {
 
         Employee employee = new Employee("E001", "John Doe", "Housekeeping", 15.00, 45);
         System.out.println("Employee total pay: " + employee.getTotalPay());
+
+        room.checkIn();
+        System.out.println("Room is available after check in: " + room.isAvailable());
+
+        // Simulate a guest checking out
+        room.checkOut();
+        System.out.println("Room is available after check out: " + room.isAvailable());
+
+        // Simulate the room being cleaned
+        room.cleanRoom();
+        System.out.println("Room is available after cleaning: " + room.isAvailable());
     }
+
+
+
 }

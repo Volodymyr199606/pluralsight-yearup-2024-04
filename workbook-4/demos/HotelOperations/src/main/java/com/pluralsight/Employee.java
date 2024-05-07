@@ -1,12 +1,14 @@
 package com.pluralsight;
 
 
+
 public class Employee {
     private final String employeeId;
     private final String name;
     private final String department;
     private final double payRate;
-    private final int hoursWorked;
+    private double hoursWorked;
+    private double startTime;
 
     public Employee(String employeeId, String name, String department, double payRate, int hoursWorked) {
         this.employeeId = employeeId;
@@ -14,6 +16,16 @@ public class Employee {
         this.department = department;
         this.payRate = payRate;
         this.hoursWorked = hoursWorked;
+        this.startTime = 0;
+    }
+
+    public void punchIn(double time) {
+        this.startTime = time;
+    }
+
+    public void punchOut(double time) {
+        double hoursThisPeriod = time - this.startTime;
+        this.hoursWorked += hoursThisPeriod;
     }
 
     public String getEmployeeId() {
