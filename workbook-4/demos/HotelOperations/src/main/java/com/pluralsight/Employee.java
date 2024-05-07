@@ -1,4 +1,6 @@
 package com.pluralsight;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 
 
@@ -22,10 +24,20 @@ public class Employee {
     public void punchIn(double time) {
         this.startTime = time;
     }
+    public void punchIn() {
+        this.startTime = getCurrentTimeAsDouble();
+    }
 
     public void punchOut(double time) {
         double hoursThisPeriod = time - this.startTime;
         this.hoursWorked += hoursThisPeriod;
+    }
+
+    private double getCurrentTimeAsDouble() {
+        LocalDateTime now = LocalDateTime.now();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        return hour + minute / 60.0;
     }
 
     public String getEmployeeId() {
