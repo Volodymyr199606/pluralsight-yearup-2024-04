@@ -13,5 +13,9 @@ public class Main
         // load all shapes into the arraylist
 
         // then print the toString() of each shape
+        for (Shape shape: shapes)
+        {
+            System.out.println(shape);
+        }
     }
 }
