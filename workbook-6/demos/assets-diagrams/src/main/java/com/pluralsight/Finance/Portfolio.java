@@ -1,4 +1,6 @@
-package com.pluralsight;
+package com.pluralsight.Finance;
+
+import com.pluralsight.Valuable;
 
 public class Portfolio
 {
