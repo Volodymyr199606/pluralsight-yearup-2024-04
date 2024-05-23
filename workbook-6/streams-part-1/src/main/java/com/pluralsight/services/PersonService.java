@@ -4,6 +4,7 @@ import com.pluralsight.models.Employee;
 import com.pluralsight.models.Person;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PersonService
@@ -11,11 +12,15 @@ public class PersonService
 
     public List<Person> findPeople(List<Person> people, String name)
     {
-        // search for people by first name
-        // return a new List<Person> with the search results
-        return new ArrayList<>();
-    }
 
+        List<Person> result = new ArrayList<>();
+        for (Person person : people) {
+            if (person.getFirstName().equalsIgnoreCase(name)) {
+                result.add(person);
+            }
+        }
+        return result;
+    }
     public List<Person> findPeople(List<Person> people, int age)
     {
         return new ArrayList<>();
@@ -23,35 +28,58 @@ public class PersonService
 
     public int calculateAverageAge(List<Person> people)
     {
-        return 0;
+        int sum = 0;
+        for (Person person : people) {
+            sum += person.getAge();
+        }
+        return sum / people.size();
     }
 
     public int findOldestAge(List<Person> people)
     {
-        return 0;
+
+        int maxAge = Integer.MIN_VALUE;
+        for (Person person : people) {
+            if (person.getAge() > maxAge) {
+                maxAge = person.getAge();
+            }
+        }
+        return maxAge;
     }
 
     public int findYoungestAge(List<Person> people)
     {
-        return 0;
+        int minAge = Integer.MAX_VALUE;
+        for (Person person : people) {
+            if (person.getAge() < minAge) {
+                minAge = person.getAge();
+            }
+        }
+        return minAge;
     }
 
     public List<Person> sortYoungestFirst(List<Person> people)
     {
-        return new ArrayList<>();
+
+        people.sort(Comparator.comparingInt(Person::getAge));
+        return people;
     }
 
     public List<Person> sortOldestFirst(List<Person> people)
     {
-        return new ArrayList<>();
+
+        people.sort(Comparator.comparingInt(Person::getAge).reversed());
+        return people;
     }
 
     public List<Employee> createEmployees(List<Person> people)
     {
-        // populate the list of Employees with...
-        // create a new Employee for each person in your people list
-        // the salary of each employee is based on their age $3,000 per year
-        // i.e. a 10 year old = $30,000, a 40 year old = $120,000 etc
-        return new ArrayList<>();
+        List<Employee> employees = new ArrayList<>();
+        for (Person person : people) {
+            double salary = person.getAge() * 3000.0;
+            Employee employee = new Employee(person.getFirstName(), person.getLastName(), person.getAge(), salary);
+            employees.add(employee);
+        }
+        return employees;
     }
 }
