@@ -36,11 +36,23 @@ GROUP BY SupplierID, CategoryID;*/
 
 
 
+/*SELECT SupplierID, COUNT(ProductName)
+FROM Products
+GROUP BY SupplierID
+HAVING COUNT(SupplierID) >= 5; */
 
 
 
 
 
+
+
+
+
+
+/*SELECT ProductID, ProductName, UnitPrice * UnitsOnOrder AS inventory_value
+FROM Products
+ORDER BY inventory_value DESC, ProductName ASC;*/
 
 
 
