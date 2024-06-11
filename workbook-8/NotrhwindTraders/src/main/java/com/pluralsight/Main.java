@@ -18,6 +18,7 @@ public class Main {
             System.out.println("What do you want to do?");
             System.out.println("1) Display all products.");
             System.out.println("2) Display all customers.");
+            System.out.println("3) Display all categories.");
             System.out.println("0) Exit.");
             System.out.print("Select an option: ");
             int option = scanner.nextInt();
@@ -27,13 +28,8 @@ public class Main {
                 break;
             }
 
-            Connection connection = null;
-            Statement statement = null;
-            ResultSet resultSet = null;
-
-            try {
-                connection = DriverManager.getConnection(url, user, password);
-                statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            try (Connection connection = DriverManager.getConnection(url, user, password);
+                 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
 
                 switch (option) {
                     case 1:
@@ -42,19 +38,14 @@ public class Main {
                     case 2:
                         displayAllCustomers(statement);
                         break;
+                    case 3:
+                        displayAllCategories(statement, scanner);
+                        break;
                     default:
-                        System.out.println("Invalid option. Please select 1, 2, or 0.");
+                        System.out.println("Invalid option. Please select 1, 2, 3, or 0.");
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
-            } finally {
-                try {
-                    if (resultSet != null) resultSet.close();
-                    if (statement != null) statement.close();
-                    if (connection != null) connection.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
             }
         }
 
@@ -62,11 +53,9 @@ public class Main {
     }
 
     private static void displayAllProducts(Statement statement) {
-        ResultSet resultSet = null;
-        try {
-            String query = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock FROM Products";
-            resultSet = statement.executeQuery(query);
+        String query = "SELECT ProductID, ProductName, UnitPrice, UnitsInStock FROM Products";
 
+        try (ResultSet resultSet = statement.executeQuery(query)) {
             // Option 1: Stacked Information
             System.out.println("Option 1: Stacked Information");
             while (resultSet.next()) {
@@ -114,21 +103,13 @@ public class Main {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
     }
 
     private static void displayAllCustomers(Statement statement) {
-        ResultSet resultSet = null;
-        try {
-            String query = "SELECT ContactName, CompanyName, City, Country, Phone FROM Customers ORDER BY Country";
-            resultSet = statement.executeQuery(query);
+        String query = "SELECT ContactName, CompanyName, City, Country, Phone FROM Customers ORDER BY Country";
 
+        try (ResultSet resultSet = statement.executeQuery(query)) {
             // Display customer information
             System.out.println("Displaying all customers:");
             while (resultSet.next()) {
@@ -143,12 +124,46 @@ public class Main {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
+        }
+    }
+
+    private static void displayAllCategories(Statement statement, Scanner scanner) {
+        String query = "SELECT CategoryID, CategoryName FROM Categories ORDER BY CategoryID";
+
+        try (ResultSet resultSet = statement.executeQuery(query)) {
+            // Display category information
+            System.out.println("Displaying all categories:");
+            while (resultSet.next()) {
+                int categoryId = resultSet.getInt("CategoryID");
+                String categoryName = resultSet.getString("CategoryName");
+                System.out.printf("Category Id: %d, Category Name: %s\n", categoryId, categoryName);
             }
+
+            System.out.print("Enter a Category Id to display products in that category: ");
+            int categoryId = scanner.nextInt();
+            displayProductsByCategory(statement, categoryId);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void displayProductsByCategory(Statement statement, int categoryId) {
+        String query = String.format("SELECT ProductID, ProductName, UnitPrice, UnitsInStock FROM Products WHERE CategoryID = %d", categoryId);
+
+        try (ResultSet resultSet = statement.executeQuery(query)) {
+            // Display product information for the selected category
+            System.out.printf("Products in Category Id: %d\n", categoryId);
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("ProductID");
+                String productName = resultSet.getString("ProductName");
+                double unitPrice = resultSet.getDouble("UnitPrice");
+                int unitsInStock = resultSet.getInt("UnitsInStock");
+                System.out.printf("Product Id: %d, Name: %s, Price: %.2f, Stock: %d\n", productId, productName, unitPrice, unitsInStock);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
